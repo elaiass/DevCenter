@@ -11,13 +11,29 @@
 
 <body onload="typeWriter()">
 
+
+    <div id="loginTela" class="login-container">
+        <h2>Login</h2>
+
+        <label>Nome:</label>
+        <input type="text" id="loginNome">
+
+        <label>Senha:</label>
+        <input type="password" id="loginSenha">
+
+        <button onclick="fazerLogin()">Entrar</button>
+    </div>
+
+
+
     <nav class="nav">
         <h2>DevCenter</h2>
         <a href="https://www.linkedin.com/in/elias-marvila-7a861924b/">Redes Sociais</a>
         <a href="https://wa.me/5522997123916">Contato</a>
     </nav>
         
-    <header>
+    <header id="headerSite">
+
 
         <div class="parallax"><h1 id="bemVindo"></h1></div>
 
@@ -121,6 +137,8 @@ Motivo: difícil → poucos dominam.</p>
 
     </footer>
 
+    <script>document.getElementById("headerSite").style.display = "none";</script>
+    <script src="https://cdn.jsdelivr.net/npm/zod@3.22.4/lib/index.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
