@@ -1,122 +1,161 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    // variavel que guarda o nome do usuário
-    let nomeUsuario = ""; // receberá o nome do login
+    let nomeUsuario = "";
 
-    // expos as funcoes no window para que onclick no HTML funcione
+    // -----------------------
+    // ANIMAÇÃO DE TEXTO
+    // -----------------------
     window.iniciarMensagem = function() {
         const texto = "Seja bem-vindo, " + nomeUsuario + "!";
         const el = document.getElementById("bemVindo");
-        if (!el) return; // segurança
+        if (!el) return;
 
         el.textContent = "";
         let i = 0;
-        const velocidade = 80;
 
         function typeWriter() {
             if (i < texto.length) {
                 el.textContent += texto.charAt(i);
                 i++;
-                setTimeout(typeWriter, velocidade);
+                setTimeout(typeWriter, 80);
             }
         }
         typeWriter();
-    }
+    };
 
+    // -----------------------
+    // LOOP (já existia)
+    // -----------------------
     window.executarLoop = function() {
         const caixa = document.getElementById("caixa");
         if (!caixa) return;
-        caixa.innerHTML = ""; // Limpa antes de começar
 
+        caixa.innerHTML = "";
         let i = 1;
 
         const intervalo = setInterval(() => {
-
-            // Quando chegar no 5 → parar e mostrar a mensagem
             if (i === 6) {
                 caixa.innerHTML += "Parou no número 5 (break usado!)";
                 clearInterval(intervalo);
                 return;
             }
 
-            // Mostra o número atual
             caixa.innerHTML += i + "<br>";
-
             i++;
 
-            // Se quiser que pare no 10 caso o break não fosse ativado
-            if (i > 10) {
-                clearInterval(intervalo);
-            }
+            if (i > 10) clearInterval(intervalo);
+        }, 700);
+    };
 
-        }, 700); // Tempo entre cada número (700ms)
-    }
+    // -----------------------
+    // TROCAR TELAS
+    // -----------------------
+    window.mostrarRegistro = function () {
+        document.getElementById("loginTela").style.display = "none";
+        document.getElementById("registroTela").style.display = "flex";
+    };
 
-    window.cadastrar = function() {
-        const nome = document.getElementById("nome").value;
-        const email = document.getElementById("email").value;
-        const celular = document.getElementById("celular").value;
+    window.mostrarLogin = function () {
+        document.getElementById("registroTela").style.display = "none";
+        document.getElementById("loginTela").style.display = "flex";
+    };
 
-        // Certifique-se que Zod está carregado antes deste script
-        if (typeof Zod === "undefined") {
-            alert("Zod não carregado. Verifique a tag <script> da CDN no HTML.");
-            return;
-        }
+    // -----------------------
+    // REGISTRO COM ZOD
+    // -----------------------
+    window.registrar = function () {
+        const nome = document.getElementById("regNome").value.trim();
+        const email = document.getElementById("regEmail").value.trim();
+        const celular = document.getElementById("regCelular").value.trim();
+        const senha = document.getElementById("regSenha").value.trim();
 
-        // Schema Zod
+        // Schema de validação
         const schema = Zod.object({
             nome: Zod.string()
-                .min(3, "O nome deve ter no mínimo 3 caracteres.")
-                .max(50, "O nome é muito longo."),
+                .min(3, "O nome deve ter pelo menos 3 caracteres.")
+                .max(50, "O nome é muito grande."),
+            
             email: Zod.string()
                 .email("E-mail inválido."),
+            
             celular: Zod.string()
-                .min(10, "O celular deve ter pelo menos 10 dígitos.")
                 .regex(/^[0-9]+$/, "O celular deve conter apenas números.")
+                .min(10, "O celular deve ter ao menos 10 dígitos."),
+            
+            senha: Zod.string()
+                .min(4, "A senha deve ter pelo menos 4 caracteres.")
+                .max(20, "A senha não pode ter mais de 20 caracteres.")
         });
 
-        const dados = { nome, email, celular };
+        const dados = { nome, email, celular, senha };
+
         const resultado = schema.safeParse(dados);
 
         if (!resultado.success) {
-            alert(resultado.error.issues[0].message);
+            alert(resultado.error.issues[0].message); 
             return;
         }
 
-        document.getElementById("resultado").innerHTML = `
-            <p><strong>Nome:</strong> ${nome}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Celular:</strong> ${celular}</p>
-        `;
-    }
+        // Salvar os dados
+        localStorage.setItem("cadastroUsuario", JSON.stringify(dados));
 
-    window.fazerLogin = function() {
-        const nome = document.getElementById("loginNome").value;
-        const senha = document.getElementById("loginSenha").value;
+        alert("Cadastro realizado com sucesso!");
+        mostrarLogin();
+    };
+
+    // -----------------------
+    // LOGIN
+    // -----------------------
+    window.fazerLogin = function () {
+        const nome = document.getElementById("loginNome").value.trim();
+        const senha = document.getElementById("loginSenha").value.trim();
 
         if (!nome || !senha) {
-            alert("Preencha nome e senha!");
+            alert("Preencha todos os campos!");
             return;
         }
 
-        // Senha fixa só para teste
-        if (senha !== "123") {
-            alert("Senha incorreta!");
+        const salvo = localStorage.getItem("cadastroUsuario");
+
+        if (!salvo) {
+            alert("Nenhum usuário cadastrado!");
             return;
         }
 
-        nomeUsuario = nome;
+        const dados = JSON.parse(salvo);
 
-        // Esconde a tela de login (se existir)
-        const loginTela = document.getElementById("loginTela");
-        if (loginTela) loginTela.style.display = "none";
+        if (nome === dados.nome && senha === dados.senha) {
+            nomeUsuario = nome;
 
-        // Mostra o site (headerSite)
-        const headerSite = document.getElementById("headerSite");
-        if (headerSite) headerSite.style.display = "block";
+            document.getElementById("loginTela").style.display = "none";
+            document.getElementById("registroTela").style.display = "none";
+            document.getElementById("headerSite").style.display = "block";
 
-        // Inicia a mensagem de boas-vindas
-        window.iniciarMensagem();
+            window.iniciarMensagem();
+            mostrarInfoCadastro();
+        } else {
+            alert("Nome ou senha incorretos!");
+        }
+    };
+
+}); // FIM DOMContentLoaded
+
+
+// MOSTRAR INFORMAÇÕES CADASTRADAS NO RODAPÉ
+function mostrarInfoCadastro() {
+    const area = document.getElementById("infoCadastro");
+    const salvo = localStorage.getItem("cadastroUsuario");
+
+    if (!salvo) {
+        area.innerHTML = "<p>Nenhum cadastro encontrado.</p>";
+        return;
     }
 
-}); // fecha o DOMContentLoaded corretamente
+    const dados = JSON.parse(salvo);
+
+    area.innerHTML = `
+        <p><strong>Nome:</strong> ${dados.nome}</p>
+        <p><strong>Email:</strong> ${dados.email}</p>
+        <p><strong>Celular:</strong> ${dados.celular}</p>
+    `;
+}

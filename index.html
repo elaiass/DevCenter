@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevCenter</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preload" as="image" href="img/numeros.jpg">
 </head>
 
 
 
 <body onload="typeWriter()">
-
 
     <div id="loginTela" class="login-container">
         <h2>Login</h2>
@@ -22,84 +22,109 @@
         <input type="password" id="loginSenha">
 
         <button onclick="fazerLogin()">Entrar</button>
+
+        <p>Ainda não tem conta? <a href="#" onclick="mostrarRegistro()">Criar conta</a></p>
     </div>
 
+    <div id="registroTela" class="login-container" style="display:none;">
+        <h2>Criar Conta</h2>
 
+        <label>Nome:</label>
+        <input type="text" id="regNome">
+
+        <label>Email:</label>
+        <input type="email" id="regEmail">
+
+        <label>Celular:</label>
+        <input type="text" id="regCelular">
+
+        <label>Senha:</label>
+        <input type="password" id="regSenha">
+
+        <button onclick="registrar()">Registrar</button>
+
+        <p>Já tem conta? <a href="#" onclick="mostrarLogin()">Fazer login</a></p>
+    </div>
+        
 
     <nav class="nav">
         <h2>DevCenter</h2>
-        <a href="https://www.linkedin.com/in/elias-marvila-7a861924b/">Redes Sociais</a>
-        <a href="https://wa.me/5522997123916">Contato</a>
+
+        <div class="nav-links">
+            <a href="https://www.linkedin.com/in/elias-marvila-7a861924b/">Redes Sociais</a>
+            <a href="https://wa.me/5522997123916">Contato</a>
+        </div>
     </nav>
-        
+
+
+
     <header id="headerSite">
 
 
         <div class="parallax"><h1 id="bemVindo"></h1></div>
 
         <section class="conteudo">
-        <h2 class="linguagens">Linguagens de Programação Mais Bem Pagas</h2>
-        <p> 1. Python
+        <h2 class="linguagens">As 10 Melhores Linguagens para 2026</h2>
+        <p> 1. Python<br>
 
-Usada em: Inteligência Artificial, Machine Learning, Automação, Data Science.
+        Continua sendo a principal linguagem para inteligência artificial, machine learning,
+         automação e ciência de dados, com enorme demanda no mercado e alto retorno financeiro.</p>
 
-Motivo do salário alto: enorme demanda em IA.
+        <p>2. JavaScript / TypeScript<br>
 
-Média salarial mundial: alta.</p>
+        Base do desenvolvimento web moderno, permite atuar no front-end, back-end, mobile e desktop,
+         sendo praticamente indispensável para aplicações atuais.
 
-<p>2. Go (Golang)
+        <p>3. Rust<br>
 
-Usada por Google, Uber, PayPal.
+       Cresce rapidamente por oferecer altíssima performance e segurança,
+        sendo muito usada em sistemas críticos, blockchain e WebAssembly, com poucos profissionais especializados.
 
-Focada em sistemas de alta performance e servidores.
+        <p>4. Go (Golang)<br>
 
-Motivo: poucos programadores dominam → salários elevados.</p>
 
-<p>3. Rust
+       Ideal para sistemas distribuídos, cloud e microserviços, é simples,
+        rápida e muito adotada em ambientes corporativos de alta escala.
 
-Famosa por segurança e performance.
+        <p>5. Java<br>
 
-Usada em sistemas críticos, engines, blockchain.
 
-Motivo: curva de aprendizado alta → pagam muito bem.</p>
+       Permanece extremamente relevante em bancos, governos e grandes empresas,
+        com um mercado sólido e estável para aplicações corporativas.</p>
 
-<p>4. Java
 
-Usada em bancos, grandes empresas e sistemas financeiros.
+        <p>6. C# (.NET)<br>
 
-Motivo: mercado corporativo paga muito bem por especialistas.</p>
+        Forte no desenvolvimento de APIs, sistemas empresariais e jogos, especialmente com
+         a evolução do .NET Core e integração com cloud.
+        </p>
 
-<p>5. TypeScript / JavaScript
+        <p>7. Swift<br>
 
-Base para desenvolvimento Web moderno.
 
-Motivo: Full Stack + demanda alta → salários competitivos.</p>
+      Linguagem oficial do ecossistema Apple, essencial para
+       desenvolvimento iOS, área que continua altamente lucrativa.
+        </p>
 
-<p>6. Kotlin & Swift
+        <p>8. Kotlin<br>
 
-Kotlin → Android
 
-Swift → iOS
+        Principal linguagem para Android, mais moderna
+         e segura que Java, também utilizada no back-end.
 
-Motivo: apps mobile continuam lucrativos, muitas empresas pagam muito alto.
-</p>
+        <p>9. C++<br>
 
-<p>7. SQL + Linguagens de Dados (R, Julia, Scala)
+        indispensável para jogos, robótica, sistemas embarcados e aplicações que exigem performance
+         extrema, com poucos profissionais realmente qualificados.
 
-Muito salário em bancos, big data, cloud e análise de dados.
-</p>
 
-<p>8. C# (.NET)
+        <p>10. SQL (indispensável)<br>
 
-Usada em empresas grandes, softwares internos, jogos (Unity).
 
-Motivo: estabilidade e pouco profissional especializado.</p>
+        Fundamental para qualquer aplicação que utilize banco de dados, sendo uma habilidade 
+        obrigatória para back-end, data e análise de informações.
 
-<p>9. C++
-
-Área: jogos, robótica, IA, sistemas embarcados.
-
-Motivo: difícil → poucos dominam.</p>
+        Não é opcional — é obrigatório.</p>
 
         <div class="imagem">
             <img src="img/linguagens.jpg" alt="linguagens">
@@ -117,23 +142,9 @@ Motivo: difícil → poucos dominam.</p>
     </header>
 
     <footer>
-        <h2>Cadastro</h2>
-
-        <div class="formulario">
-            <label>Nome:</label>
-            <input type="text" id="nome">
-
-            <label>E-mail:</label>
-            <input type="email" id="email">
-
-            <label>Celular:</label>
-            <input type="text" id="celular">
-
-            <button onclick="cadastrar()">Cadastrar</button>
-        </div>
-
-        <h3>Informações Cadastradas:</h3>
-        <div id="resultado"></div>
+    
+        <h2>Informações do Cadastro</h2>
+        <div id="infoCadastro"></div>
 
     </footer>
 

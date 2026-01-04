@@ -46,16 +46,23 @@ a {
 }
 
 
-
-
-
 .nav {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 400px;
- 
+  justify-content: space-between;
+
+  padding: 20px 90px;
 }
+
+.nav h2 {
+  margin: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 300px;
+}
+
 
 #bemVindo {
   font-size: 32px;
@@ -91,6 +98,7 @@ a {
   padding: 40px;
   background: #17497e;
   font-size: 20px;
+
 }
 
 .linguagens {
@@ -153,3 +161,30 @@ button {
   width: 300px;
   color: black;
 }
+
+
+#infoCadastro {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 350px;
+  margin-top: 20px;
+  color: white;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border: 1px solid #0b2742;
+}
+
+#infoCadastro p {
+  background: #17497eb9;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 8px 0;
+
+  font-size: 18px;
+}
+
+#infoCadastro strong {
+  color: #4cc9ff;
+}
+
